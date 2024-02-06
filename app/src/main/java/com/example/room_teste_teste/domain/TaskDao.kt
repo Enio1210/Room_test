@@ -6,21 +6,17 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
+import kotlinx.coroutines.flow.Flow
 
 
 @Dao
 interface TaskDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(task: Task)
+    suspend fun save(task: Task)
 
     @Query("Select * from task")
-    fun getAll(): LiveData<List<Task>>
-
-
-    @Update(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun update(task: Task)
-
+    fun getAll(): Flow<List<Task>>
 
     //deleta todas
     @Query("DELETE from task")
